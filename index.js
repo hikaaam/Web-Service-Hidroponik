@@ -43,45 +43,18 @@ routes(app)
 var io = socket(server);
 var clients = [];
 io.on('connection', function (socket) {
-    console.log('made socket connection', socket.id);
-    // socket.on('join', function (data) {
-
-    //     socket.join(data.email); // We are using room of socket io
-    //     var clients = io.sockets.adapter.rooms[data.email].sockets; 
-    //     console.log(clients);
-    //   });
-    // socket.on('storeClientInfo', function (data) {
-    //     var clientInfo = new Object();
-    //     clientInfo.customId = data.customId;
-    //     clientInfo.clientId = socket.id;
-    //     if (clients.find(x => x.customId === data.customId)) {
-    //         // console.log('true');
-    //         for (var i = 0, len = clients.length; i < len; ++i) {
-    //             var c = clients[i];
-
-    //             if (c.customId == data.customId) {
-    //                 clients.splice(i, 1);
-    //                 // break;
-    //             }
-    //         }
-
-    //         clients.push(clientInfo);
-    //     } else {
-    //         clients.push(clientInfo);
-    //     }
-    //     console.log(clients);
-    // });
-    socket.on('new user',function(data){
-        if(data in clients){
+    console.log('\nmade socket connection', socket.id);
+ 
+    socket.on('new user', function (data) {
+        if (data in clients) {
             delete clients[data];
             socket.nickname = data;
             clients[socket.nickname] = socket;
-        }
-        else{
+        } else {
             socket.nickname = data;
             clients[socket.nickname] = socket;
         }
-        // console.log(clients);
+        // console.log(clients[socket.nickname]);
     })
 
     socket.on('chat', function (data) {
@@ -96,32 +69,39 @@ io.on('connection', function (socket) {
         io.emit("chat message", msg);
     });
     socket.on('temp', function (id, data) {
-    //  io.sockets.to(id_user).emit('temp',data);
-    io.to(clients[id]['id']).emit('temp',data);
-       console.log(clients[id]['id']);
-  
-        
+       
+        if (clients.hasOwnProperty(id)) {
+            io.to(clients[id]['id']).emit('temp', data);
+            console.log(clients[id]['id']);
+        } else {
+            console.log("\nTarget Device Is Offline or Doesn't exist ");
+        }
+
+   
     });
     socket.on('disconnect', function (data) {
 
-        // for (var i = 0, len = clients.length; i < len; ++i) {
-        //     var c = clients[i];
-
-        //     if (c.clientId == socket.id) {
-        //         clients.splice(i, 1);
-        //         break;
-        //     }
-        // }
-       delete clients[socket.nickname];
-        // console.log(clients);
+        delete clients[socket.nickname];
 
     });
-    socket.on('tds', function (data) {
-        io.sockets.emit('tds', data);
-        // console.log(socket.adapter.nickname);
+    socket.on('tds', function (id,data) {
+        if (clients.hasOwnProperty(id)) {
+            io.to(clients[id]['id']).emit('tds', data);
+            console.log(clients[id]['id']);
+        } else {
+            console.log("\nTarget Device Is Offline or Doesn't exist ");
+        }
+      
     });
-    socket.on('wl', function (data) {
+    socket.on('wl', function (id,data) {
         io.sockets.emit('wl', data);
-        // console.log(data);
+        if (clients.hasOwnProperty(id)) {
+            io.to(clients[id]['id']).emit('wl', data);
+            console.log(clients[id]['id']);
+        } else {
+            console.log("\nTarget Device Is Offline or Doesn't exist ");
+        }
+     
     });
 });
+

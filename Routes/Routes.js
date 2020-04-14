@@ -13,8 +13,9 @@ module.exports = function (app) {
   app.route('/users/:id')
     .get(usersCon.find)
     .put(usersCon.update_a_task)
-    .delete(usersCon.delete_a_task)
-    .post(usersCon.login);
+    .delete(usersCon.delete_a_task);
+
+  app.route('/otp').post(usersCon.otp);
 
   app.route('/prototype')
     .get(ProtoCon.all)

@@ -97,8 +97,11 @@
     <script>
         var query = getQueryParams(document.location.search);
         var socket = io.connect('http://localhost:4000');
-        socket.on('connect',function(data){
-            socket.emit('new user','Pmilos@gmail.com');
+        socket.on('connect', function (data) {
+            socket.emit('new user', 'Pmilos@gmail.com');
+            kirimData(query.email,'myRange','temp','Temperature');
+            kirimData(query.email,'myRange2','tds','Tds');
+            kirimData(query.email,'myRange3','wl','wl');
         });
 
         var slider = document.getElementById("myRange");
@@ -110,12 +113,10 @@
             output.innerHTML = this.value + '°C';
             status(this.value, 'temp');
             var text = document.getElementById("Temperature");
-            socket.emit('temp',query.email,
-             {
+            socket.emit('temp', query.email, {
                 val: this.value,
                 msg: text.innerHTML,
-            }
-            );
+            });
         }
 
         var slider2 = document.getElementById("myRange2");
@@ -127,7 +128,7 @@
             output2.innerHTML = this.value + ' PPM';
             status(this.value, 'tds');
             var text = document.getElementById("Tds");
-            socket.emit('tds', {
+            socket.emit('tds', query.email, {
                 val: this.value,
                 msg: text.innerHTML,
             });
@@ -142,9 +143,9 @@
             output3.innerHTML = this.value + '%';
             status(this.value, 'wl');
             var text = document.getElementById("wl");
-            socket.emit('wl', {
+            socket.emit('wl', query.email, {
                 val: this.value,
-               msg: text.innerHTML,
+                msg: text.innerHTML,
             });
         }
 
@@ -178,21 +179,29 @@
                 }
             }
         }
+
         function getQueryParams(qs) {
-    qs = qs.split('+').join(' ');
+            qs = qs.split('+').join(' ');
 
-    var params = {},
-        tokens,
-        re = /[?&]?([^=]+)=([^&]*)/g;
+            var params = {},
+                tokens,
+                re = /[?&]?([^=]+)=([^&]*)/g;
 
-    while (tokens = re.exec(qs)) {
-        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-    }
+            while (tokens = re.exec(qs)) {
+                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+            }
 
-    return params;
-}
+            return params;
+        }
 
-
+        function kirimData(id, data, tujuan,stat) {
+            var text = document.getElementById(stat);
+            var slider = document.getElementById(data);
+            socket.emit(tujuan, id,  {
+                val: slider.value,
+                msg: text.innerHTML,
+            });
+        }
     </script>
 </body>
 

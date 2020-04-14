@@ -9,8 +9,10 @@
   "author": "ilyas a yusuf",
   "license": "ISC",
   "dependencies": {
+    "dateformat": "^3.0.3",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
+    "nodemailer": "^6.4.6",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
