@@ -99,9 +99,9 @@
         var socket = io.connect('http://localhost:4000');
         socket.on('connect', function (data) {
             socket.emit('new user', 'Pmilos@gmail.com');
-            kirimData(query.email,'myRange','temp','Temperature');
-            kirimData(query.email,'myRange2','tds','Tds');
-            kirimData(query.email,'myRange3','wl','wl');
+            kirimData(query.id,'myRange','temp','Temperature');
+            kirimData(query.id,'myRange2','tds','Tds');
+            kirimData(query.id,'myRange3','wl','wl');
         });
 
         var slider = document.getElementById("myRange");
@@ -113,7 +113,7 @@
             output.innerHTML = this.value + '°C';
             status(this.value, 'temp');
             var text = document.getElementById("Temperature");
-            socket.emit('temp', query.email, {
+            socket.emit('temp', query.id, {
                 val: this.value,
                 msg: text.innerHTML,
             });
@@ -128,7 +128,7 @@
             output2.innerHTML = this.value + ' PPM';
             status(this.value, 'tds');
             var text = document.getElementById("Tds");
-            socket.emit('tds', query.email, {
+            socket.emit('tds', query.id, {
                 val: this.value,
                 msg: text.innerHTML,
             });
@@ -143,7 +143,7 @@
             output3.innerHTML = this.value + '%';
             status(this.value, 'wl');
             var text = document.getElementById("wl");
-            socket.emit('wl', query.email, {
+            socket.emit('wl', query.id, {
                 val: this.value,
                 msg: text.innerHTML,
             });

@@ -28,12 +28,18 @@ function msg(message){
 
 var fs = require('fs');
 
-exports.all = function(req,res) {
-con.query('select * FROM '+TableName, function (err, result) {  
-    if (err) throw err;
+exports.find = function(req,res) {
+  try {
 
-res.json(result);
-  });
+    con.query('select * FROM '+TableName+" where prototype_id = ? ",req.query.id, function (err, result) {  
+      if (err) throw err;
+  
+  res.json(result);
+    });
+  } catch (error) {
+    console.log(error)
+  }
+
 };
 
 exports.create = function(req, res) {
@@ -75,7 +81,7 @@ res.json(result);
 };
 
 
-exports.find = function(req,res) {
+exports.index = function(req,res) {
    fs.readFile('public/prototype.html',null,function(err,data){
     if(err){
       res.write(err);

@@ -144,7 +144,7 @@ exports.login = function (req, res) {
     if (err) throw err;
     if (result.length > 0) {
       // res.json(result);
-      res.redirect('../prototype/' + id);
+      res.redirect('../prototype/' + id+"?id=1471984882");
     } else {
       res.redirect('back');
       // res.send(msg('There is no account with this email'))

@@ -30,7 +30,9 @@ app.use(bodyParser.json());
 // var router = require('express').Router();
 
 var routes = require('./Routes/Routes');
-
+process.on('uncaughtException', function(ex) {
+    console.log(""+ex);
+});
 var server = app.listen(4000, function () {
     console.log('listening to request on port 4000')
 });

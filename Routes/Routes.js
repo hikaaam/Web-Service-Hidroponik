@@ -12,16 +12,17 @@ module.exports = function (app) {
 
   app.route('/users/:id')
     .get(usersCon.find)
+    .post(usersCon.login)
     .put(usersCon.update_a_task)
     .delete(usersCon.delete_a_task);
 
   app.route('/otp').post(usersCon.otp);
 
   app.route('/prototype')
-    .get(ProtoCon.all)
+    .get(ProtoCon.find)
     .post(ProtoCon.create);
   app.route('/prototype/:id')
-    .get(ProtoCon.find)
+    .get(ProtoCon.index)
     .put(ProtoCon.update_a_task)
     .delete(ProtoCon.delete_a_task);
   app.route('/').get(HomeCon.home);
