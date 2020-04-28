@@ -1,5 +1,7 @@
 'use strict';
-
+var db = 'ta20_Hidroponik';
+var uname = 'ta20_lulusbareng';
+var pw = 'Kudululus2020';
 var TableName = 'Table_users';
 var mysql = require('mysql');
 var con = mysql.createConnection({
