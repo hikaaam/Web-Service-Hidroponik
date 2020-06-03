@@ -2,7 +2,9 @@
 var db = 'ta20_Hidroponik';
 var uname = 'ta20_lulusbareng';
 var pw = 'Kudululus2020';
-var TableName = 'Table_users';
+var TableName = 'table_users';
+var path = require('path');
+var __publicDir = path.join(__dirname+"/../public");
 var mysql = require('mysql');
 var con = mysql.createConnection({
   host: "localhost",
@@ -124,6 +126,7 @@ exports.otp = function (req, res) {
     subject: 'Hidroponik App '+"["+code+"]",
     html: '<html lang="en">  <head>    <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Kirim Email</title>    <style> body{   margin-left: auto;  margin-right: auto; text-align: center; background-color: #eee;  } p{  font-family: monospace; font-size: large; color:#111;  }   h1{font-family: monospace;color: blue;  }</style> </head> <body><p>'+datefrmt+'</p> <p>Your OTP Password Is :</p>    <h1>' + code + '</h1>  <p>Do not Share This Password To Anyone!!</p> </body>  </html> '
   };
+  try{
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       res.json({
@@ -136,6 +139,10 @@ exports.otp = function (req, res) {
       res.json(code);
     }
   });
+}
+catch(error){
+  console.log(error);
+}
   // res.json(datefrmt);
 }
 exports.login = function (req, res) {
@@ -148,7 +155,8 @@ exports.login = function (req, res) {
       // res.json(result);
       res.redirect('../prototype/' + id+"?id=1471984882");
     } else {
-      res.redirect('back');
+      res.render(__publicDir+"\\index.html",{name:'ilyas'});
+      // res.send(__publicDir+"\\index.html");
       // res.send(msg('There is no account with this email'))
     }
   });

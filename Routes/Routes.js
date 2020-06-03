@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function (app) {
-  var usersCon = require('../controllers/UserController');
+  var usersCon = require('../Controllers/UserController');
   var ProtoCon = require('../Controllers/PrototypeController');
   var HomeCon = require('../Controllers/HomeController');
 
