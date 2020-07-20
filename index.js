@@ -79,6 +79,10 @@ io.on('connection', function (socket) {
                 _val: currentData['P' + socket.nickname]['wl']['data'],
                 _msg: 'Current Data',
             });
+            io.to(clients[socket.nickname]['id']).emit('hum', {
+                _val: currentData['P' + socket.nickname]['hum']['data'],
+                _msg: 'Current Data',
+            });
             console.log('\nupdate for user\n');
         }
         else {
@@ -111,8 +115,8 @@ io.on('connection', function (socket) {
         } else {
             console.log("\nTarget Device Is Offline or Doesn't exist ");
         }
-
     });
+
     socket.on('createData', function (data) {
         if (currentData.hasOwnProperty(socket.nickname)) {
             currentData.push(data);
@@ -160,5 +164,110 @@ io.on('connection', function (socket) {
         }
 
     });
+    socket.on('hum', function (data) {
+        id = data._id;
+        if (clients.hasOwnProperty(id)) {
+            io.to(clients[id]['id']).emit('hum', data);
+            console.log(clients[id]['id']);
+        } else {
+            console.log("\nTarget Device Is Offline or Doesn't exist ");
+        }
+
+    });
+
+    socket.on('rtemp', function (data) {
+        console.log("\nkirim\n\n")
+        console.log(data);
+        id = data._id;
+        if (clients.hasOwnProperty(id)) {
+            io.to(clients[id]['id']).emit('rtemp', true);
+            console.log(clients[id]['id']);
+        } else {
+            console.log("\nTarget Device Is Offline or Doesn't exist ");
+        }
+
+    });
+    socket.on('rhum', function (data) {
+        console.log("\nkirim\n\n")
+        console.log(data);
+        id = data._id;
+        if (clients.hasOwnProperty(id)) {
+            io.to(clients[id]['id']).emit('rhum', true);
+            console.log(clients[id]['id']);
+        } else {
+            console.log("\nTarget Device Is Offline or Doesn't exist ");
+        }
+
+    });
+    socket.on('rtds', function (data) {
+        console.log("\nkirim\n\n")
+        console.log(data);
+        id = data._id;
+        if (clients.hasOwnProperty(id)) {
+            io.to(clients[id]['id']).emit('rtds', true);
+            console.log(clients[id]['id']);
+        } else {
+            console.log("\nTarget Device Is Offline or Doesn't exist ");
+        }
+
+    });
+    socket.on('rwl', function (data) {
+        console.log("\nkirim\n\n")
+        console.log(data);
+        id = data._id;
+        if (clients.hasOwnProperty(id)) {
+            io.to(clients[id]['id']).emit('rwl', true);
+            console.log(clients[id]['id']);
+        } else {
+            console.log("\nTarget Device Is Offline or Doesn't exist ");
+        }
+    });
+
+    socket.on('resTemp', function (data) {
+    //  console.log(data);
+     var id = data._id;
+     console.log('\n\n' + id);
+     if (clients.hasOwnProperty(id)) {
+         io.to(clients[id]['id']).emit('resTemp', data);
+     } else {
+         console.log("\nTarget Device Is Offline or Doesn't exist ");
+     }
+ });
+
+    
+ socket.on('resHum', function (data) {
+    //  console.log(data);
+     var id = data._id;
+     console.log('\n\n' + id);
+     if (clients.hasOwnProperty(id)) {
+         io.to(clients[id]['id']).emit('resHum', data);
+     } else {
+         console.log("\nTarget Device Is Offline or Doesn't exist ");
+     }
+ });
+
+ socket.on('resTds', function (data) {
+    //  console.log(data);
+     var id = data._id;
+     console.log('\n\n' + id);
+     if (clients.hasOwnProperty(id)) {
+         io.to(clients[id]['id']).emit('resTds', data);
+     } else {
+         console.log("\nTarget Device Is Offline or Doesn't exist ");
+     }
+ });
+
+ socket.on('resWl', function (data) {
+    //  console.log(data);
+     var id = data._id;
+     console.log('\n\n' + id);
+     if (clients.hasOwnProperty(id)) {
+         io.to(clients[id]['id']).emit('resWl', data);
+     } else {
+         console.log("\nTarget Device Is Offline or Doesn't exist ");
+     }
+ });
+
+
 });
 
