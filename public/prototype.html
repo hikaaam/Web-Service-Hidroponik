@@ -95,13 +95,14 @@
         </div>
     </div>
     <script>
-        var query = getQueryParams(document.location.search);
-        var socket = io.connect('http://localhost:4000');
+        var query = "1471984882";
+        var socket = io.connect('http://ta2020.xyz:4000');
+   
         socket.on('connect', function (data) {
-            socket.emit('new user', 'Pmilos@gmail.com');
-            kirimData(query.id,'myRange','temp','Temperature');
-            kirimData(query.id,'myRange2','tds','Tds');
-            kirimData(query.id,'myRange3','wl','wl');
+            // socket.emit('new user', 'P'+query.id);
+            kirimData("1471984882",'myRange','temp','Temperature');
+            kirimData("1471984882",'myRange2','tds','Tds');
+            kirimData("1471984882",'myRange3','wl','wl');
         });
 
         var slider = document.getElementById("myRange");
@@ -113,9 +114,10 @@
             output.innerHTML = this.value + '°C';
             status(this.value, 'temp');
             var text = document.getElementById("Temperature");
-            socket.emit('temp', query.id, {
-                val: this.value,
-                msg: text.innerHTML,
+            socket.emit('temp',  {
+                _val: this.value,
+                _msg: text.innerHTML,
+                _id:query
             });
         }
 
@@ -128,9 +130,10 @@
             output2.innerHTML = this.value + ' PPM';
             status(this.value, 'tds');
             var text = document.getElementById("Tds");
-            socket.emit('tds', query.id, {
-                val: this.value,
-                msg: text.innerHTML,
+            socket.emit('tds',  {
+               _val: this.value,
+                _msg: text.innerHTML,
+                _id:query
             });
         }
 
@@ -143,9 +146,10 @@
             output3.innerHTML = this.value + '%';
             status(this.value, 'wl');
             var text = document.getElementById("wl");
-            socket.emit('wl', query.id, {
-                val: this.value,
-                msg: text.innerHTML,
+            socket.emit('wl',  {
+                _val: this.value,
+                _msg: text.innerHTML,
+                _id:query
             });
         }
 
@@ -197,9 +201,10 @@
         function kirimData(id, data, tujuan,stat) {
             var text = document.getElementById(stat);
             var slider = document.getElementById(data);
-            socket.emit(tujuan, id,  {
-                val: slider.value,
-                msg: text.innerHTML,
+            socket.emit(tujuan,  {
+                _val: slider.value,
+                _msg: text.innerHTML,
+                _id:id
             });
         }
     </script>
