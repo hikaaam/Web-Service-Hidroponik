@@ -16,7 +16,7 @@
     "googleapis": "^59.0.0",
     "moment": "^2.24.0",
     "mysql": "^2.18.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "nodemailer": "^6.4.6",
     "socket.io": "^2.3.0"
   },
